@@ -4,7 +4,13 @@ export default function ToDo(props) {
     return (
         <li className="todo stack-small">
           <div className="c-cb">
-            <input id={props.id} type="checkbox" defaultChecked={props.completed} />
+            <input 
+            id={props.id} 
+            type="checkbox" 
+            defaultChecked={props.completed} 
+            //TypeError: props.toggleTaskCompleted is not a function and may need to bind callback prop function
+            onChange = {() => props.toggleTaskCompleted(props.id)} 
+            />
             <label className="todo-label" htmlFor="todo-0">
               {props.name}
             </label>

@@ -9,19 +9,34 @@ function App(props) {
 
   const [tasks, setTasks] = useState(props.tasks);
 
+  function toggleTaskCompleted(id) {
+    const updatedTasks = tasks.map(task =>{
+      if (id === task.id) {
+        return {...task, completed: !task.completed}
+      }
+      return task
+    });
+    setTasks(updatedTasks);
+  }
+
+  //why does the ToDo component props need to match the task.attribute name?
   const taskList = tasks.map(task => (
   <ToDo 
   id={task.id} 
   name={task.name} 
-  completed={task.completed}
+  toggleTaskCompleted={toggleTaskCompleted}
   key={task.id}  
   />
   ));
+
+  const tasksNoun = taskList.length !== 1 ? 'tasks' : 'task';
+  const headingText = `${taskList.length} ${tasksNoun} remaining` 
 
   function addTask(name) {
     const newTask = {id: "todo-" + nanoid(), name: name, completed: "false"}
     setTasks([...tasks, newTask]);
   }
+
 
   return (
     <div className="todoapp stack-large">
@@ -29,7 +44,7 @@ function App(props) {
       <Form addTask={addTask} />
       <Filter />
       <h2 id="list-heading">
-        3 tasks remaining
+        {headingText}
       </h2>
       <ul
         role="list"
