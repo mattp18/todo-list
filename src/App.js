@@ -19,13 +19,16 @@ function App(props) {
     setTasks(updatedTasks);
   }
 
+
   //why does the ToDo component props need to match the task.attribute name?
   const taskList = tasks.map(task => (
   <ToDo 
   id={task.id} 
-  name={task.name} 
+  name={task.name}
+  completed={task.completed} 
+  key={task.id}
   toggleTaskCompleted={toggleTaskCompleted}
-  key={task.id}  
+  deleteTask={deleteTask}  
   />
   ));
 
@@ -35,6 +38,14 @@ function App(props) {
   function addTask(name) {
     const newTask = {id: "todo-" + nanoid(), name: name, completed: "false"}
     setTasks([...tasks, newTask]);
+  }
+
+  //copy all objects into remainTasks that don't match the object of passed id
+  function deleteTask(id) {
+    const remaininTasks = tasks.filter(task => id !== task.id);
+    setTasks(remaininTasks);
+    
+ 
   }
 
 
